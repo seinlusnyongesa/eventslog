@@ -1,21 +1,22 @@
-import React,  from "react";
-import {  Button, Col, Row,  } from "react-bootstrap";
+import React from "react";
+import { Button, Col, Row } from "react-bootstrap";
 import { prisma } from "../lib/prisma";
 import moment from "moment";
-import { useRouter}from "next/router"
-
-
+import { useRouter } from "next/router";
 
 const index = ({ data }) => {
-    const router = useRouter()
-  const { id,title, location, date, description } = data;
- async function handleDelete(){
-    const res = await fetch(`/api/hello`,{method:"DELETE",body:JSON.stringify(id)})
-    const response = await res
-    console.log(await response)
-router.replace("/")
-return
-}
+  const router = useRouter();
+  const { id, title, location, date, description } = data;
+  async function handleDelete() {
+    const res = await fetch(`/api/hello`, {
+      method: "DELETE",
+      body: JSON.stringify(id),
+    });
+    const response = await res;
+    console.log(await response);
+    router.replace("/");
+    return;
+  }
 
   return (
     <div>
@@ -47,7 +48,7 @@ export async function getServerSideProps(context) {
   `;
   const data = res[0];
   return {
-    props: { data:JSON.parse(JSON.stringify(data)) },
+    props: { data: JSON.parse(JSON.stringify(data)) },
   };
 }
 
