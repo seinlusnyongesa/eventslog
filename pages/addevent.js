@@ -38,7 +38,7 @@ const validate = (values) => {
   return errors;
 };
 
-const addevent = () => {
+const AddEvent = () => {
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -134,4 +134,4 @@ const addevent = () => {
   );
 };
 
-export default addevent;
+export default AddEvent;
