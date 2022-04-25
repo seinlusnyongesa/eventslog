@@ -42,11 +42,8 @@ const Index = ({ data }) => {
 };
 export async function getServerSideProps(context) {
   const id = parseInt(context.params.id);
-  const res = await await prisma.$queryRaw`
-  select id, title,location, description,date from event
-  where id = ${id}
-  `;
-  const data = res[0];
+  const data = await prisma.event.findUnique({ where: { id } });
+
   return {
     props: { data: JSON.parse(JSON.stringify(data)) },
   };
