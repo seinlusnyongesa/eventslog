@@ -4,7 +4,7 @@ import { prisma } from "../lib/prisma";
 import moment from "moment";
 import { useRouter } from "next/router";
 
-const index = ({ data }) => {
+const Index = ({ data }) => {
   const router = useRouter();
   const { id, title, location, date, description } = data;
   async function handleDelete() {
@@ -66,4 +66,4 @@ export async function getServerSideProps(context) {
 //     fallback: "blocking",
 //   };
 // }
-export default index;
+export default Index;
