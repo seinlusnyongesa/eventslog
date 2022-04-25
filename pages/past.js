@@ -1,26 +1,22 @@
-import React,  from "react";
-import moment from "moment";
+import React, { useContext } from "react";
+import moment, { now } from "moment";
 
-
-import Link from "next/link"
 // import { PrismaClient } from "@prisma/client";
 // const prisma = new PrismaClient();
 import { prisma } from "../lib/prisma";
+import Link from "next/link";
+import { ListGroup } from "react-bootstrap";
 
-import { ListGroup} from "react-bootstrap";
-
-const index = ({ upcomingEvents}) => {
-  
-  
+const past = ({ pastevent }) => {
   return (
     <div>
       <h3 className="text-center fw-light fs-2 text-uppercase mt-4 pt-4">
-        upcoming events
+        past events
       </h3>
 
       <ListGroup as="ol" numbered>
-        {upcomingEvents.length ? (
-          upcomingEvents.map((i) => (
+        {pastevent.length ? (
+          pastevent.map((i) => (
             <div key={i.id}>
               <ListGroup.Item
                 as="li"
@@ -42,7 +38,7 @@ const index = ({ upcomingEvents}) => {
             </div>
           ))
         ) : (
-          <ListGroup.Item className="d-flex justify-content-start ">
+          <ListGroup.Item  className="d-flex justify-content-start ">
             <div className="d-flex justify-content-between align-items-center py-2">
               <h4 className="me-5 text-muted">no events to show.</h4>{" "}
               <div>
@@ -59,15 +55,13 @@ const index = ({ upcomingEvents}) => {
 };
 
 export const getServerSideProps = async ({ context }) => {
-  const  upcomingEvents= await prisma.event.findMany({
-    where: { date: { gt: new Date() } },
+  const pastevent = await prisma.event.findMany({
+    where: { date: { lt: new Date() } },
   });
 
   return {
-    props: { upcomingEvents: JSON.parse(JSON.stringify(upcomingEvents)) },
+    props: { pastevent: JSON.parse(JSON.stringify(pastevent)) },
   };
-
-  
 };
 
-export default index;
+export default past;
